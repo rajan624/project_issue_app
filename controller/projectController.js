@@ -26,9 +26,15 @@ function viewProjectIssueForm(req, res) {
     projectName: "Testing Project",
   });
 }
+
+function createProjectIssueForm(req, res) {
+  logger.log("View Project Issue Form Function Start !");
+  res.redirect("/project/viewProject/12");
+}
 module.exports = {
     viewAddForm,
     addProjectForm,
     viewProjectDetails,
-    viewProjectIssueForm
+    viewProjectIssueForm,
+    createProjectIssueForm
 }
