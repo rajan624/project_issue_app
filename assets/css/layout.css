@@ -1,0 +1,15 @@
+        body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+          .main-content {
+            padding-top: 100px; /* Adjust to match header height */
+            padding-bottom: 100px; /* Adjust to match footer height */
+            overflow-y: auto;
+        }

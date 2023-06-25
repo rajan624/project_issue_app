@@ -10,6 +10,7 @@ app.use(express.static("./assets"))
 app.use(expressLayout);
 app.set("layout extractStyles", true);
 app.set("layout extractScripts", true);
+app.use(express.urlencoded());
 
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "view"))
