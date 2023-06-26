@@ -31,6 +31,7 @@ input[type=submit]:hover {
 
 .container {
   border-radius: 5px;
+  height: 88vh;
   background-color: #f2f2f2;
   padding: 20px;
 }
@@ -60,4 +61,45 @@ input[type=submit]:hover {
     width: 100%;
     margin-top: 0;
   }
+}
+
+  
+  .custom-select {
+  position: relative;
+  display: inline-block;
+}
+
+.custom-select select {
+  display: none; /* Hide the default select dropdown */
+}
+
+.custom-select:after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  width: 8px;
+  height: 8px;
+  border-bottom: 1px solid #ccc;
+  border-right: 1px solid #ccc;
+  transition: all 0.3s;
+  pointer-events: none;
+}
+
+.custom-select select[multiple] {
+  height: auto; /* Adjust the height based on the number of selected options */
+}
+
+.custom-select select[multiple] option {
+  padding: 10px;
+}
+
+.custom-select select:focus + .custom-select:after {
+  transform: translateY(-50%) rotate(-45deg);
+}
+
+.custom-select select[multiple] option:checked {
+  background-color: #eaf2ff;
+  color: #000;
 }

@@ -16,7 +16,16 @@ const project = [
   },
 ];
 
-
+const projectIssue = [
+    {
+        title: "issue 01",
+        description: "this is the issue for this project",
+        author: "RangRor",
+        projectId: 2,
+        label:[]
+    }
+]
 module.exports = {
-    project
+    project,
+    projectIssue
 }
