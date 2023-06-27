@@ -6,7 +6,7 @@ const port = 8000;
 const expressLayout = require("express-ejs-layouts");
 const homePageRoutes = require("./routes/homePageRoutes")
 const projectRoutes = require("./routes/projectRoutes")
-app.use(express.static("./assets"))
+app.use(express.static(path.join(__dirname, "assets")));
 app.use(expressLayout);
 app.set("layout extractStyles", true);
 app.set("layout extractScripts", true);
