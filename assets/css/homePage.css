@@ -110,3 +110,20 @@ tr:hover {
   max-width: 255px;
   background-color: #333;
 }
+.filter-form{
+  display: flex;
+  flex-wrap: wrap;
+  align-items: end;
+  justify-content: space-between;
+  margin: 1vw 2vw;
+
+}
+
+
+.select-box{
+  width: 24vw;
+}
+
+.input-box{
+  width: 20vw;
+}
