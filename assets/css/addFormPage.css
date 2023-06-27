@@ -103,3 +103,21 @@ input[type=submit]:hover {
   background-color: #eaf2ff;
   color: #000;
 }
+
+.filter-form{
+  display: flex;
+  flex-wrap: wrap;
+  align-items: end;
+  justify-content: space-between;
+  margin: 1vw 2vw;
+
+}
+
+
+.select-box{
+  width: 24vw;
+}
+
+.input-box{
+  width: 20vw;
+}

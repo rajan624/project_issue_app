@@ -22,18 +22,67 @@ function deleteProjectForm(req, res) {
   res.redirect("/");
 }
 function viewProjectDetails(req, res) {
-    logger.log("View Project Details Function Start !")
-    console.log(db.project);
-    const projectDetails = db.project[req.params.id];
+  logger.log("View Project Details Function Start !")
+  console.log("requested Body",req.query);
+  const projectDetails = db.project[req.params.id];
     const filteredIssues = db.projectIssue.filter(
       (issue) => issue.projectId === req.params.id
-    );
+  );
+   const authors = [];
+
+   db.projectIssue.forEach((issue) => {
+     if (issue.projectId === req.params.id) {
+       authors.push(issue.author);
+     }
+   });
+  const labels = db.projectIssue
+    .filter((issue) => issue.projectId === req.params.id)
+    .map((issue) => issue.label)
+    .flat();
     res.render("projectIssueDetails", {
       title: projectDetails?.name,
-        projectName: projectDetails?.name,
-        projectId: req?.params?.id,
-          projectIssue :filteredIssues
+      projectName: projectDetails?.name,
+      projectId: req?.params?.id,
+      projectIssue: filteredIssues,
+      projectLabel: labels,
+      projectAuthor: authors,
     });
+}
+
+function filterIssuesByQuery(issues, query) {
+  return issues.filter((issue) => {
+    // Check if the issue's author matches the query author
+    if (query.author && issue.author !== query.author) {
+      return false;
+    }
+
+    // Check if the issue's labels match all of the query labels
+    if (query.label && query.label.length > 0) {
+      for (const label of query.label) {
+        if (!issue.label.includes(label)) {
+          return false;
+        }
+      }
+    }
+
+    // Check if the issue's title matches the query title
+    if (
+      query.title &&
+      !issue.title.toLowerCase().includes(query.title.toLowerCase())
+    ) {
+      return false;
+    }
+
+    // Check if the issue's description matches the query description
+    if (
+      query.description &&
+      !issue.description.toLowerCase().includes(query.description.toLowerCase())
+    ) {
+      return false;
+    }
+
+    return true;
+  });
 }
 
 function viewProjectIssueForm(req, res) {
@@ -58,7 +107,8 @@ function createProjectIssueForm(req, res) {
     logger.log("View Project Issue Form Function Start !");
     const projectIssue = req.body
     projectIssue.projectId = req.params.id;
-    db.projectIssue.push(projectIssue);
+  db.projectIssue.push(projectIssue);
+  console.log(db.projectIssue);
   res.redirect(`/project/viewProject/${req.params.id}`);
 }
 
