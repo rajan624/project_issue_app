@@ -16,7 +16,7 @@ function addProjectForm(req, res) {
 function deleteProjectForm(req, res) {
   logger.log("Add Form Function Start !");
   db.projectIssue = db.projectIssue.filter(
-    (issue) => issue.projectId !== req.params.id
+    (issue) => issue.projectId != req.params.id
   );
   db.project.splice(req.params.id, 1);
   res.redirect("/");
@@ -24,18 +24,47 @@ function deleteProjectForm(req, res) {
 function viewProjectDetails(req, res) {
   logger.log("View Project Details Function Start !")
   const projectDetails = db.project[req.params.id];
-    const filteredIssues = db.projectIssue.filter(
-      (issue) => issue.projectId === req.params.id
+    let filteredIssues = db.projectIssue.filter(
+      (issue) => issue.projectId == req.params.id
     );
-  console.log(filteredIssues);
+  console.log("we are here for filtering data", req.query);
+  if (req.query.author){
+     filteredIssues = filteredIssues.filter(
+      (issue) => issue.author == req.params.author
+    );
+  }
+  if (req.query.label) {
+    filteredIssues = filteredIssues.filter(
+      (issue) => issue.author == req.params.label
+    );
+  }
+  if (req.query.description) {
+    filteredIssues = filteredIssues.filter(
+      (issue) => issue.author == req.params.description
+    );
+  }
+  if (req.query.label) {
+    if (!Array.isArray(req.query.label)) {
+      let labelArray = [req.query.label]
+      req.query.label = labelArray;
+    }
+   filteredIssues = filteredIssues.filter(obj => {
+      return Object.keys(req.query).some(key => {
+        return req.query[key].every(value => {
+          return obj[key].includes(value);
+        });
+      });
+    });
+
+  }
    const authors = [];
    db.projectIssue.forEach((issue) => {
-     if (issue.projectId === req.params.id) {
+     if (issue.projectId == req.params.id) {
        authors.push(issue.author);
      }
    });
   const labels = db.projectIssue
-    .filter((issue) => issue.projectId === req.params.id)
+    .filter((issue) => issue.projectId == req.params.id)
     .map((issue) => issue.label)
     .flat();
     res.render("projectIssueDetails", {
@@ -47,49 +76,12 @@ function viewProjectDetails(req, res) {
       projectAuthor: authors,
     });
 }
-
-function filterIssuesByQuery(issues, query) {
-  return issues.filter((issue) => {
-    // Check if the issue's author matches the query author
-    if (query.author && issue.author !== query.author) {
-      return false;
-    }
-
-    // Check if the issue's labels match all of the query labels
-    if (query.label && query.label.length > 0) {
-      for (const label of query.label) {
-        if (!issue.label.includes(label)) {
-          return false;
-        }
-      }
-    }
-
-    // Check if the issue's title matches the query title
-    if (
-      query.title &&
-      !issue.title.toLowerCase().includes(query.title.toLowerCase())
-    ) {
-      return false;
-    }
-
-    // Check if the issue's description matches the query description
-    if (
-      query.description &&
-      !issue.description.toLowerCase().includes(query.description.toLowerCase())
-    ) {
-      return false;
-    }
-
-    return true;
-  });
-}
-
 function viewProjectIssueForm(req, res) {
     logger.log("View Project Issue Form Function Start !");
   const projectDetails = db.project[req.params.id];
   console.log(db.projectIssue);
   const labels = db.projectIssue
-    .filter((issue) => issue.projectId === req.params.id)
+    .filter((issue) => issue.projectId == req.params.id)
     .map((issue) => issue.label)
     .flat();
   console.log("My all labels",labels);
@@ -104,7 +96,11 @@ function viewProjectIssueForm(req, res) {
 
 function createProjectIssueForm(req, res) {
     logger.log("View Project Issue Form Function Start !");
-    const projectIssue = req.body
+  const projectIssue = req.body
+  if (!Array.isArray(req.body.label)) {
+    let labelArray = [req.body.label]
+    req.body.label = labelArray;
+  }
     projectIssue.projectId = req.params.id;
   db.projectIssue.push(projectIssue);
   console.log(db.projectIssue);
