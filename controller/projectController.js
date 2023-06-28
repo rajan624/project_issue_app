@@ -26,37 +26,33 @@ function viewProjectDetails(req, res) {
   const projectDetails = db.project[req.params.id];
     let filteredIssues = db.projectIssue.filter(
       (issue) => issue.projectId == req.params.id
-    );
-  console.log("we are here for filtering data", req.query);
-  if (req.query.author){
-     filteredIssues = filteredIssues.filter(
-      (issue) => issue.author == req.params.author
-    );
-  }
-  if (req.query.label) {
+  );
+  if (req.query.author && req.query.author != "") {
     filteredIssues = filteredIssues.filter(
-      (issue) => issue.author == req.params.label
+      (issue) => issue.author == req.query.author
     );
   }
-  if (req.query.description) {
+  if (req.query.title && req.query.title != "") {
     filteredIssues = filteredIssues.filter(
-      (issue) => issue.author == req.params.description
+      (issue) => issue.title == req.query.title
     );
   }
-  if (req.query.label) {
+  if (req.query.description && req.query.description != "") {
+    filteredIssues = filteredIssues.filter(
+      (issue) => issue.description == req.query.description
+    );
+  }
+  if (req.query.label && req.query.label!="") {
     if (!Array.isArray(req.query.label)) {
-      let labelArray = [req.query.label]
+      let labelArray = [req.query.label];
       req.query.label = labelArray;
     }
-   filteredIssues = filteredIssues.filter(obj => {
-      return Object.keys(req.query).some(key => {
-        return req.query[key].every(value => {
-          return obj[key].includes(value);
-        });
-      });
-    });
+    filteredIssues = filteredIssues.filter((obj) =>
+      obj.label.some((label) => req.query.label.includes(label))
+    );
 
   }
+   
    const authors = [];
    db.projectIssue.forEach((issue) => {
      if (issue.projectId == req.params.id) {

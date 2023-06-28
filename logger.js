@@ -1,21 +1,33 @@
+const debug = true;
 function info(...params) {
-    console.info(params);
+    if (debug) {
+    
+        console.info(params);
+}
 }
 
 
 function error(...params) {
-    console.error(params);
+    if (debug) {
+        
+        console.error(params);
+    }
 }
 
 
 
 function warn(...params) {
-    console.warn(params);
+    if (debug) {
+        
+        console.warn(params);
+    }
 }
 
 
 function log(...params) {
-    console.log(params);
+    if (debug) {
+        console.log(params);
+    }
 }
 
 

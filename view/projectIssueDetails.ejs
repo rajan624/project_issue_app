@@ -14,6 +14,7 @@
   <div class="select-box">
     <label for="author">Filter by Author:</label>
     <select name="author" class="author-select" id="author">
+         <option value="">Select an author</option>
            <% projectAuthor.forEach((value, index) => { %>
                           <option value="<%= value%>"><%= value%></option>
 <% }); %>
