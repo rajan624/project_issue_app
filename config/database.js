@@ -1,29 +1,43 @@
 const project = [
   {
-    name: "project1",
+    name: "LMS web app",
     author: "tony Stark",
-    description: "we are testing here bro!",
+    description: "learning management System is web application",
   },
   {
-    name: "project2",
+    name: "CMS web app",
     author: "Thor",
-    description: "we are testing here bro!",
+    description: "Content Management System is web application",
   },
   {
-    name: "project3",
+    name: "IOT Hub",
     author: "Black Widow",
-    description: "we are testing here bro!",
+    description: "IOT project",
   },
 ];
 
 const projectIssue = [
     {
-        title: "issue 01",
-        description: "this is the issue for this project",
+        title: "user login",
+        description: "user unable to login",
         author: "RangRor",
         projectId: 2,
-        label:[]
-    }
+        label:["login","user"]
+  },
+  {
+    title: "form data",
+    description: "user unable to send Form data in add hub",
+    author: "Walkrie",
+    projectId: 0,
+    label: ["api", "data"]
+  },
+  {
+    title: "user signup",
+    description: "user unable to signup",
+    author: "Black Widow",
+    projectId: 0,
+    label: ["signup", "user"]
+  }
 ]
 module.exports = {
     project,
