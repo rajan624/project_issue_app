@@ -23,13 +23,12 @@ function deleteProjectForm(req, res) {
 }
 function viewProjectDetails(req, res) {
   logger.log("View Project Details Function Start !")
-  console.log("requested Body",req.query);
   const projectDetails = db.project[req.params.id];
     const filteredIssues = db.projectIssue.filter(
       (issue) => issue.projectId === req.params.id
-  );
+    );
+  console.log(filteredIssues);
    const authors = [];
-
    db.projectIssue.forEach((issue) => {
      if (issue.projectId === req.params.id) {
        authors.push(issue.author);
