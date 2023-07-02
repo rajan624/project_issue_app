@@ -1,6 +1,9 @@
 const { Router } = require("express");
 const router = Router();
 const projectController = require("../controller/projectController")
+
+
+// project routes 
 router.route("/viewAddForm").get(projectController.viewAddForm);
 router.route("/addProjectForm").post(projectController.addProjectForm);
 router.route("/deleteProjectForm/:id").get(projectController.deleteProjectForm);

@@ -1,6 +1,6 @@
 const logger = require("../logger");
 const db = require("../config/database");
-
+//rendering add project from
 function viewAddForm(req, res) {
     logger.log("View Add Form Function Start !")
     res.render("addProjectForm", {
@@ -8,21 +8,28 @@ function viewAddForm(req, res) {
     });
 }
 
+//Adding project in db
 function addProjectForm(req, res) {
     logger.log("Add Form Function Start !");
     db.project.push(req.body);
     res.redirect("/");
 }
+
+//deleting project from db
 function deleteProjectForm(req, res) {
   logger.log("Add Form Function Start !");
+  //filter project from db 
   db.projectIssue = db.projectIssue.filter(
     (issue) => issue.projectId != req.params.id
   );
   db.project.splice(req.params.id, 1);
   res.redirect("/");
 }
+
+//rendering view project details
 function viewProjectDetails(req, res) {
   logger.log("View Project Details Function Start !")
+  //filtering project issue 
   const projectDetails = db.project[req.params.id];
     let filteredIssues = db.projectIssue.filter(
       (issue) => issue.projectId == req.params.id
@@ -72,10 +79,13 @@ function viewProjectDetails(req, res) {
       projectAuthor: authors,
     });
 }
+
+//view project issue form
 function viewProjectIssueForm(req, res) {
     logger.log("View Project Issue Form Function Start !");
   const projectDetails = db.project[req.params.id];
   console.log(db.projectIssue);
+  //getting label of project
   const labels = db.projectIssue
     .filter((issue) => issue.projectId == req.params.id)
     .map((issue) => issue.label)
@@ -90,6 +100,7 @@ function viewProjectIssueForm(req, res) {
   });
 }
 
+//adding issue in project
 function createProjectIssueForm(req, res) {
     logger.log("View Project Issue Form Function Start !");
   const projectIssue = req.body
@@ -103,7 +114,7 @@ function createProjectIssueForm(req, res) {
   res.redirect(`/project/viewProject/${req.params.id}`);
 }
 
-
+//deleting project issue form
 function deleteProjectIssueForm(req, res) {
   logger.log("delete Project Issue Form Function Start !");
   const projectId = db.projectIssue[req.params.id].projectId

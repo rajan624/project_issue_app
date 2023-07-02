@@ -14,6 +14,8 @@ app.use(express.urlencoded());
 
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "view"))
+
+//routes
 app.use("/", homePageRoutes);
 app.use("/project",projectRoutes)
 
