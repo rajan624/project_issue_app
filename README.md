@@ -3,6 +3,9 @@
 
 This UI is designed to provide a neat interface for managing projects and issues in a bug tracker system. It includes the following pages: Home Page, Create Project Page, Project Detail Page, and Create Issue Page.
 
+Check out the live version of the project: <a href="https://project-issue-app.vercel.app/" target="_blank">Project Issue App</a>
+
+
 # Home Page
 
 The Home Page displays a list of projects. Users can create new projects by clicking a button, and the newly created project will appear in the list.
